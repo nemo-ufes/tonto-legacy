@@ -26,7 +26,7 @@ To provide the most accurate and context-aware assistance, it is essential to us
 
 3.  **Follow the Guidance**: Once the appropriate rule is attached, follow the instructions within that file to complete the user's request.
 
-4.  **Default to General Guidance**: If the user's request does not fall into any of the specific categories above, refer to the general \`@tonto-guidance.mdc\` file for basic information about the project structure and CLI commands.
+4.  **Default to General Guidance**: If the user's request does not fall into any of the specific categories above, refer to the general \`@tonto-guidance.mdc\` file for basic information about the project structure and the MCP workflow. Use \`tonto_ast\` to inspect models, \`tonto_apply\` to preview edits, and \`tonto_validate\` to validate saved files; use the detailed tool instructions in the general guidance.
 
 5. **Ask for permission**: Please, first plan step by step and explain to the user your plan. Then, ask for it to confirm or suggest any changes, and only after that execute it.
 

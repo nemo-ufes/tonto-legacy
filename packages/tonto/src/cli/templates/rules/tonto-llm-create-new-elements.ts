@@ -162,7 +162,7 @@ Extending an existing Tonto ontology involves adding new classes, attributes, re
 *   Ontology modeling is iterative. After adding new elements, review them:
     *   Are the stereotypes correct according to UFO?
     *   Are relationships and cardinalities accurate?
-    *   Are there any validation errors from the Tonto tooling?
+    *   After saving changes and releasing your held overlays, does \`tonto_validate\` return \`valid: true\` for the saved path? Inspect project diagnostics and explain unresolved modelling decisions.
     *   Does the extension make sense in the overall context of the ontology?
 *   Refer to the \`docs/tonto.md\` paper and UFO literature for guidance on ontological principles.
 `;

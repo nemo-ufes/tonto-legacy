@@ -272,7 +272,7 @@ New Concept Assessment:
 
 **After each addition:**
 
-1. Run Tonto validation tools
+1. Call `tonto_validate` with saved file paths after releasing your held overlays; check `valid` and project diagnostics
 2. Check for logical consistency
 3. Test with sample data
 4. Verify relationship integrity

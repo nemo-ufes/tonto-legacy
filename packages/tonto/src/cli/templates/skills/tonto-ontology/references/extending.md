@@ -9,7 +9,7 @@ This guide covers how to add new classes, attributes, relations, and generalizat
 3. **Classify each concept** — Assign the correct UFO category (see decision tree below).
 4. **Define attributes and relations** — Add properties and connections.
 5. **Organize into packages** — Group related elements for modularity.
-6. **Validate** — Check for linter errors and ontological consistency.
+6. **Validate with MCP** — Use `tonto_validate` after saving changes and releasing your held overlays. Review project diagnostics and ontological consistency; follow the MCP workflow in SKILL.md.
 
 ## Decision Tree for Choosing Stereotypes
 
@@ -158,5 +158,5 @@ After extending the ontology, verify:
 - [ ] Non-sortals have appropriate `of <nature>` constraints
 - [ ] Relators mediate at least two distinct entities
 - [ ] **No reserved keywords used as attribute names** — stereotype keywords (`kind`, `role`, `type`, `phase`, `mode`, `relator`, `quality`, etc.), `label`, `description`, and `value` are reserved and cannot be used as attribute or datatype field names. Use prefixed alternatives (e.g., `_description`, `_value`, `_role`) or synonyms (e.g., `summary`, `amount`, `participationRole`).
-- [ ] No linter errors in the Tonto editor
+- [ ] Saved files pass `tonto_validate` with no introduced project errors
 - [ ] The extension is consistent with the existing ontology's conventions

@@ -1,3 +1,5 @@
+import { tontoMcpGuidance } from "../tonto-mcp-guidance.js";
+
 export type TontoOntologySkillTemplateFile = {
     relativePath: string;
     content: string;
@@ -31,10 +33,11 @@ When working with a Tonto project, identify what the user needs and read the app
 | Summarize or explain the ontology in natural language | \`references/summarization.md\` |
 | Write labels, descriptions, JSDoc documentation | \`references/documentation.md\` |
 
-For basic syntax questions, CLI usage, or project structure, the information below is sufficient.
+For basic syntax questions, MCP usage, or project structure, the information below is sufficient.
 
 **Important workflow rule:** Before executing any significant change, plan your approach step-by-step and present it to the user for confirmation. Only proceed after they approve or suggest modifications.
 
+${tontoMcpGuidance}
 ## Core Syntax Reference
 
 ### Package and Imports
@@ -62,6 +65,17 @@ A package is defined by its file, not its directory. The folder structure is org
     // internal relations
 }
 \`\`\`
+
+### Individuals
+
+\`\`\`tonto
+kind Man { name: string }
+individual john: Man {
+  name = "John Doe"
+}
+\`\`\`
+
+The classifier after \`:\` must reference a class declaration of any stereotype. Supply every mandatory, non-derived attribute, including attributes inherited through specialization or generalization sets. No cardinality means \`[1]\`; optional and derived attributes may be omitted. Use lists for multiple values, unquoted enum members for enums, and nested assignment objects for structured datatypes. Unknown attributes, duplicate assignments, incorrect value types, and cardinality violations are errors. \`tonto_validate\` checks individuals; schema exports do not preserve them.
 
 ### Stereotypes
 
@@ -255,6 +269,36 @@ type Species
 kind Dog (instanceOf Species)
 kind Cat (instanceOf Species)
 \`\`\`
+
+## Project Structure
+
+\`\`\`
+my-ontology/
+├── src/           # .tonto source files
+├── lib/           # External packages (managed by tpm)
+├── generated/     # Output artifacts (JSON, GUFO)
+└── tonto.json     # Project manifest
+\`\`\`
+
+## CLI Operations Outside MCP
+
+- \`tonto-cli init\` — Initialize new project
+- \`tonto-cli validate <dir> --with-api\` — Only for explicitly requested external API checks; use \`tonto_validate\` for routine local validation
+- \`tonto-cli generate <dir>\` — Generate JSON representation
+- \`tonto-cli transform <dir>\` — Transform to GUFO (Turtle/TTL)
+- \`tonto-cli import <file.json>\` — Generate .tonto from JSON
+- \`tpm install\` — Install dependencies
+- \`tpm add <package>\` — Add a dependency
+
+## Best Practices
+
+- **Modular design**: Use separate \`.tonto\` files for distinct conceptual domains. Use imports to connect them.
+- **Accurate stereotyping**: The stereotype choice is the most consequential decision. Understand UFO distinctions (rigidity, sortality, identity, dependence) before choosing. Avoid using generic \`class\` when the ontological nature is clear.
+- **Clear naming**: PascalCase for types, camelCase for attributes and relation ends. Relators are nouns representing the relationship; roles reflect the role played.
+- **Precise cardinalities**: Define them carefully for both attributes and relation ends.
+- **Ontological natures for non-sortals**: Use the \`of <nature>\` clause to constrain instances.
+- **Meaningful gensets**: Structure taxonomies explicitly with \`disjoint\` and \`complete\`.
+- **Validate saved models with \`tonto_validate\`**: Report project diagnostics and unresolved ontological inconsistencies.
 `,
     },
     {
@@ -368,7 +412,7 @@ This guide covers how to add new classes, attributes, relations, and generalizat
 3. **Classify each concept** — Assign the correct UFO category (see decision tree below).
 4. **Define attributes and relations** — Add properties and connections.
 5. **Organize into packages** — Group related elements for modularity.
-6. **Validate** — Check for linter errors and ontological consistency.
+6. **Validate with MCP** — Use \`tonto_validate\` after saving changes and releasing your held overlays. Review project diagnostics and ontological consistency; follow the MCP workflow in SKILL.md.
 
 ## Decision Tree for Choosing Stereotypes
 
@@ -517,7 +561,7 @@ After extending the ontology, verify:
 - [ ] Non-sortals have appropriate \`of <nature>\` constraints
 - [ ] Relators mediate at least two distinct entities
 - [ ] **No reserved keywords used as attribute names** — stereotype keywords (\`kind\`, \`role\`, \`type\`, \`phase\`, \`mode\`, \`relator\`, \`quality\`, etc.), \`label\`, \`description\`, and \`value\` are reserved and cannot be used as attribute names. Use prefixed alternatives (e.g., \`_description\`, \`_value\`, \`_role\`) or synonyms (e.g., \`summary\`, \`amount\`, \`participationRole\`).
-- [ ] No linter errors in the Tonto editor
+- [ ] Saved files pass \`tonto_validate\` with no introduced project errors
 - [ ] The extension is consistent with the existing ontology's conventions
 `,
     },

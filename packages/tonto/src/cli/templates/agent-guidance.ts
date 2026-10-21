@@ -25,7 +25,8 @@ This folder contains the Tonto guidance set for agentic IDEs that load project i
    - Documentation or translation: \`tonto_llm_documentation_guide.md\`
 3. Use \`tonto-guidance.md\` for grammar, syntax, and project structure questions.
 4. Use \`tonto-cardinality-guidance.md\` for relation cardinalities and multiplicity constraints.
-5. When a request changes the ontology, inspect the existing model first, explain the intended modeling approach, and call out important assumptions before editing.
+5. Follow the MCP workflow in \`tonto-guidance.md\`: inspect with \`tonto_ast\`, preview edits with \`tonto_apply\`, save returned source using filesystem tools, and validate saved files with \`tonto_validate\`. Release your saved files' held overlays before validating disk content.
+6. When a request changes the ontology, inspect the existing model first, explain the intended modeling approach, and call out important assumptions before editing.
 `.trimStart();
 
 export const agentFolderGuidanceFiles: readonly AgentGuidanceFile[] = [

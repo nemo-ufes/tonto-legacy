@@ -1,3 +1,5 @@
+import { tontoMcpGuidance } from "../tonto-mcp-guidance.js";
+
 export const tontoGuidance: string = `
 # Tonto Grammar Reference for LLMs
 
@@ -16,8 +18,9 @@ Tonto is a textual modeling language for creating well-founded ontologies. It en
 
 **Goal:** Facilitate high-quality, precise conceptual models by leveraging UFO's clear semantics in a user-friendly textual format.
 
-**Observation**: Tonto is only responsible for creating the *schema* of the ontology, not being able to declare individuals (instances of those types)
+**Individuals**: Tonto supports schema declarations and named individuals with validated attribute values. Individuals are not included in schema diagrams or OntoUML JSON/OWL exports.
 
+${tontoMcpGuidance}
 ## 1. Quick Syntax Reference
 
 ### File Structure Pattern
@@ -50,6 +53,17 @@ import <PackageName> as <Alias>
   (<InternalRelation>)*
 }
 \`\`\`
+
+### Individuals
+
+\`\`\`tonto
+kind Man { name: string }
+individual john: Man {
+  name = "John Doe"
+}
+\`\`\`
+
+The classifier after \`:\` must reference a class declaration of any stereotype. Supply every mandatory, non-derived attribute, including attributes inherited through specialization or generalization sets. No cardinality means \`[1]\`; optional and derived attributes may be omitted. Use lists for multiple values, unquoted enum members for enums, and nested assignment objects for structured datatypes. Unknown attributes, duplicate assignments, incorrect value types, and cardinality violations are errors. \`tonto_validate\` checks individuals; schema exports do not preserve them.
 
 ### Attribute Pattern
 \`\`\`
@@ -1775,7 +1789,7 @@ tpm add some-ontology-package           # Adds and installs dependency
 
 1. **Read the Grammar First:** Consult sections 1-6 to understand syntax
 2. **Examine Examples:** Review section 7 for patterns matching the task
-3. **Check for Errors:** Always validate after making changes
+3. **Check for Errors:** After saving changes and releasing your held overlays, call \`tonto_validate\` with the saved path and inspect project diagnostics
 4. **Use Qualified Names:** For cross-package references (section 8)
 5. **Avoid Common Errors:** Review section 9 before generating code
 6. **Follow Best Practices:** Apply guidelines from section 10
